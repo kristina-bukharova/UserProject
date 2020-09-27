@@ -31,7 +31,6 @@ export default class UserRetriever {
     }
 
     public async createNewUser(user: UserDetails): Promise<string> {
-    console.log("UserRetriever -> user", user)
         try {
             const result = await axios.post(this.endpoint + "/user/", user);
             return result.data.id;
