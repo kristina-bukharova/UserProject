@@ -3,12 +3,14 @@ import { IDatabaseClient } from "../../database/IDatabaseClient";
 import Route from "../route";
 import { v4 as uuidv4 } from 'uuid';
 import { validate as uuidValidate } from 'uuid';
+import ToneRetriever from "../../toneRetriever";
 
 export type UserDetails = {
     id: string,
     firstName: string,
     lastName: string,
     biographyTitle: string,
+    biographyTone?: string,
 }
 
 export const errors = {
@@ -19,7 +21,7 @@ export const errors = {
 };
 
 export default class UserController extends Route {
-    constructor(private databaseClient: IDatabaseClient) {
+    constructor(private databaseClient: IDatabaseClient, private toneRetriever: ToneRetriever) {
         super("/");
     }
 
@@ -42,6 +44,8 @@ export default class UserController extends Route {
         }
 
         try {
+            const tone = await this.toneRetriever.getTone();
+
             const dbRecord = await this.databaseClient.getUserInfo(userId);
             if (!dbRecord) {
                 return response.status(404).send(errors.userNotFound);
@@ -51,6 +55,7 @@ export default class UserController extends Route {
                 firstName: dbRecord.first_name,
                 lastName: dbRecord.last_name,
                 biographyTitle: dbRecord.biography_title,
+                biographyTone: tone
             };
             return response.status(200).json(userDetails)
         } catch (err) {

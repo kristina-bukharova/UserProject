@@ -1,7 +1,8 @@
 import UserController, { errors } from "../userController";
-import { mockResponse, mockPostgresDatabaseConfig, mockUserData, mockUserPostRequest, mockAnyPostRequest } from "../../../utils/mockObjects";
+import { mockResponse, mockPostgresDatabaseConfig, mockUserData, mockUserPostRequest, mockAnyPostRequest } from "../../../testUtils/mockObjects";
 import PostgresDatabaseClient from "../../../database/postgresClient";
 import { validate as uuidValidate } from 'uuid';
+import ToneRetriever from "../../../toneRetriever";
 
 jest.mock("../../../database/postgresClient");
 jest.mock("uuid");
@@ -9,11 +10,13 @@ jest.mock("uuid");
 describe("Create User", () => {
     let userController: UserController;
     let mockPostgresClient: PostgresDatabaseClient;
+    let toneRetriever: ToneRetriever;
     let res: any;
 
     beforeAll(() => {
         mockPostgresClient = new PostgresDatabaseClient(mockPostgresDatabaseConfig);
-        userController = new UserController(mockPostgresClient);
+        toneRetriever = new ToneRetriever("http://some-url.com");
+        userController = new UserController(mockPostgresClient, toneRetriever);
     });
 
     beforeEach(() => {

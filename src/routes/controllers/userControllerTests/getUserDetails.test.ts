@@ -1,19 +1,24 @@
 import UserController, { errors, UserDetails } from "../userController";
-import { mockResponse, mockPostgresDatabaseConfig, mockGetRequestWithParams, mockUserData } from "../../../utils/mockObjects";
+import { mockResponse, mockPostgresDatabaseConfig, mockGetRequestWithParams, mockUserData } from "../../../testUtils/mockObjects";
 import PostgresDatabaseClient from "../../../database/postgresClient";
 import { validate as uuidValidate } from 'uuid';
+import ToneRetriever from "../../../toneRetriever";
 
 jest.mock("../../../database/postgresClient");
+jest.mock("../../../toneRetriever")
 jest.mock("uuid");
 
 describe("Get User Details", () => {
     let userController: UserController;
     let mockPostgresClient: PostgresDatabaseClient;
+    let toneRetriever: ToneRetriever;
     let res: any;
 
     beforeAll(() => {
         mockPostgresClient = new PostgresDatabaseClient(mockPostgresDatabaseConfig);
-        userController = new UserController(mockPostgresClient);
+        toneRetriever = new ToneRetriever("http://some-url.com");
+        userController = new UserController(mockPostgresClient, toneRetriever);
+        (toneRetriever.getTone as jest.Mock).mockResolvedValue("humorous");
     });
 
     beforeEach(() => {
@@ -29,6 +34,7 @@ describe("Get User Details", () => {
             firstName: mockUserData.first_name,
             lastName: mockUserData.last_name,
             biographyTitle: mockUserData.biography_title,
+            biographyTone: "humorous",
         };
 
         const req: any = mockGetRequestWithParams({ id: "8e4958aa-8530-4014-bdf2-8edb7bba519a" });

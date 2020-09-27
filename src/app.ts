@@ -3,6 +3,7 @@ import Dotenv from "dotenv";
 import UserController from './routes/controllers/userController';
 import PostgresDatabaseClient from './database/postgresClient';
 import { PoolConfig } from 'pg';
+import ToneRetriever from './toneRetriever';
 
 Dotenv.config();
 
@@ -13,8 +14,9 @@ const main = (() => {
     const password: string | undefined = process.env.PG_PASSWORD;
     const database: string | undefined = process.env.PG_DATABASE;
     const dbPort: number | undefined = Number(process.env.PG_PORT);
+    const toneAPI: string | undefined = process.env.TONE_API;
 
-    if (appPort && user && host && password && database && dbPort) {
+    if (appPort && user && host && password && database && dbPort && toneAPI) {
         const postgresDatabaseConfig: PoolConfig = {
             user,
             host,
@@ -23,10 +25,11 @@ const main = (() => {
             port: dbPort,
         }
         const databaseClient = new PostgresDatabaseClient(postgresDatabaseConfig);
+        const apiConnector = new ToneRetriever(toneAPI);
         const server: Server = new Server(
             appPort,
             [
-                new UserController(databaseClient),
+                new UserController(databaseClient, apiConnector),
             ],
         );
         server.start();

@@ -11,7 +11,6 @@ export default class PostgresDatabaseClient implements IDatabaseClient {
     }
 
     public async getUserInfo(id: string) {
-        console.log("OK");
         try {
             const results = await this.pool.query(`SELECT * from ${this.tableName} WHERE id = $1`, [id]);
             if (results.rows.length !== 0) {
