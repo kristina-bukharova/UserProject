@@ -22,7 +22,7 @@ describe("Get User Details", () => {
         (uuidValidate as unknown as jest.Mock).mockReturnValue(true);
     });
 
-    it("responds with status 200 and return given user details when given a proper request", async () => {
+    it("responds with status 200 and returns given user's details when given a proper request", async () => {
         (mockPostgresClient.getUserInfo as jest.Mock).mockResolvedValue(mockUserData);
         const returnedUserDetails: UserDetails = {
             id: mockUserData.id,

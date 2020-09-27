@@ -21,7 +21,7 @@ describe("Get Unique ID", () => {
         res = mockResponse();
     });
 
-    it("responds with status 200 and returns the created user's id when given a proper request", async () => {
+    it("responds with status 200 and returns a uuid", async () => {
         (uuidv4 as unknown as jest.Mock).mockReturnValue("2e8ae507-e4cf-4c04-aac4-ab0019b9963d");
 
         const req: any = null;
