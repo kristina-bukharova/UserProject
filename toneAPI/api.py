@@ -5,7 +5,7 @@ app = flask.Flask(__name__)
 
 @app.route('/tone', methods=['GET'])
 def getRandomTone():
-    tone = random.choice(["humorous", "ironic", "cynical"])
+    tone = random.choice(["Humorous", "Ironic", "Cynical"])
     return { "tone" : tone }
 
 app.run()
