@@ -17,14 +17,14 @@ export const lastNames = [
     "Todd",
     "Baker",
     "Wheeler",
-    "Smoker",
+    "Darling",
     "Anderson",
     "Johnson",
-    "Kramer",
+    "Kim",
     "Greene",
     "Geller",
     "Bing",
-    "Liang"];
+    "Lang"];
 
 export const biographyTitles = [
     "My life",
