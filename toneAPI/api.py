@@ -8,4 +8,4 @@ def getRandomTone():
     tone = random.choice(["Humorous", "Ironic", "Cynical"])
     return { "tone" : tone }
 
-app.run()
+app.run(host='0.0.0.0')
