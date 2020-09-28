@@ -6,7 +6,6 @@
   "scripts": {
     "start:debug": "nodemon src/app.ts",
     "start": "node dist/src/app.js",
-    "test": "node_modules/.bin/jest",
     "build": "node_modules/.bin/tsc"
   },
   "author": "Kristina Bukharova",
