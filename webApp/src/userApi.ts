@@ -8,7 +8,7 @@ export type UserDetails = {
     biographyTone?: string,
 }
 
-export default class UserRetriever {
+export default class UserAPI {
     constructor(private endpoint: string) {
     }
 

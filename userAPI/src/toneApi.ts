@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default class ToneRetriever {
+export default class ToneAPI {
     constructor(private endpoint: string) {
     }
 

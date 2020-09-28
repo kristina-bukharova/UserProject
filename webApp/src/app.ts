@@ -1,7 +1,7 @@
 import Server from './server';
 import Dotenv from "dotenv";
 import UserServer from './routes/controllers/userServer';
-import UserRetriever from './userRetriever';
+import UserAPI from './userApi';
 
 Dotenv.config();
 
@@ -10,11 +10,11 @@ const main = (() => {
     const appPort: number | undefined = Number(process.env.APP_PORT);
 
     if (userAPI && appPort) {
-        const apiConnector = new UserRetriever(userAPI);
+        const userApi = new UserAPI(userAPI);
         const server: Server = new Server(
             appPort,
             [
-                new UserServer(apiConnector),
+                new UserServer(userApi),
             ],
         );
         server.start();

@@ -1,12 +1,12 @@
 import Express from "express";
 import Route from "../route";
-import UserRetriever, { UserDetails } from "../../userRetriever";
+import UserAPI, { UserDetails } from "../../userApi";
 import { firstNames, lastNames, biographyTitles } from "../../utils/sampleData";
 
 export default class UserServer extends Route {
     private users: UserDetails[] = [];
 
-    constructor(private userRetriever: UserRetriever) {
+    constructor(private userApi: UserAPI) {
         super("/");
     }
 
@@ -21,15 +21,15 @@ export default class UserServer extends Route {
 
     public async addNewUserToList() {
         try {
-            const uuid = await this.userRetriever.getNewId();
+            const uuid = await this.userApi.getNewId();
             const randomNewUser = {
                 id: uuid,
                 firstName: firstNames[Math.floor(Math.random() * firstNames.length)],
                 lastName: lastNames[Math.floor(Math.random() * lastNames.length)],
                 biographyTitle: biographyTitles[Math.floor(Math.random() * biographyTitles.length)]
             }
-            await this.userRetriever.createNewUser(randomNewUser)
-            const userData = await this.userRetriever.getUserInfo(uuid);
+            await this.userApi.createNewUser(randomNewUser)
+            const userData = await this.userApi.getUserInfo(uuid);
             this.users.push(userData);
         } catch (err) {
             console.log(err.message);

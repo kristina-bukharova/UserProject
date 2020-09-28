@@ -2,7 +2,7 @@ import PostgresDatabaseClient from "../../../database/postgresClient";
 import { mockPostgresDatabaseConfig, mockResponse } from "../../../testUtils/mockObjects";
 import UserController from "../userController";
 import { v4 as uuidv4 } from 'uuid';
-import ToneRetriever from "../../../toneRetriever";
+import ToneAPI from "../../../toneApi";
 
 jest.mock("../../../database/postgresClient");
 jest.mock("uuid");
@@ -10,13 +10,13 @@ jest.mock("uuid");
 describe("Get Unique ID", () => {
     let userController: UserController;
     let mockPostgresClient: PostgresDatabaseClient;
-    let toneRetriever: ToneRetriever;
+    let toneApi: ToneAPI;
     let res: any;
 
     beforeAll(() => {
         mockPostgresClient = new PostgresDatabaseClient(mockPostgresDatabaseConfig);
-        toneRetriever = new ToneRetriever("http://some-url.com");
-        userController = new UserController(mockPostgresClient, toneRetriever);
+        toneApi = new ToneAPI("http://some-url.com");
+        userController = new UserController(mockPostgresClient, toneApi);
     });
 
     beforeEach(() => {

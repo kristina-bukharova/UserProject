@@ -2,23 +2,23 @@ import UserController, { errors, UserDetails } from "../userController";
 import { mockResponse, mockPostgresDatabaseConfig, mockGetRequestWithParams, mockUserData } from "../../../testUtils/mockObjects";
 import PostgresDatabaseClient from "../../../database/postgresClient";
 import { validate as uuidValidate } from 'uuid';
-import ToneRetriever from "../../../toneRetriever";
+import ToneAPI from "../../../toneApi";
 
 jest.mock("../../../database/postgresClient");
-jest.mock("../../../toneRetriever")
+jest.mock("../../../toneApi")
 jest.mock("uuid");
 
 describe("Get User Details", () => {
     let userController: UserController;
     let mockPostgresClient: PostgresDatabaseClient;
-    let toneRetriever: ToneRetriever;
+    let toneApi: ToneAPI;
     let res: any;
 
     beforeAll(() => {
         mockPostgresClient = new PostgresDatabaseClient(mockPostgresDatabaseConfig);
-        toneRetriever = new ToneRetriever("http://some-url.com");
-        userController = new UserController(mockPostgresClient, toneRetriever);
-        (toneRetriever.getTone as jest.Mock).mockResolvedValue("humorous");
+        toneApi = new ToneAPI("http://some-url.com");
+        userController = new UserController(mockPostgresClient, toneApi);
+        (toneApi.getTone as jest.Mock).mockResolvedValue("humorous");
     });
 
     beforeEach(() => {

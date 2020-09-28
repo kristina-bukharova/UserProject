@@ -3,7 +3,7 @@ import { IDatabaseClient } from "../../database/IDatabaseClient";
 import Route from "../route";
 import { v4 as uuidv4 } from 'uuid';
 import { validate as uuidValidate } from 'uuid';
-import ToneRetriever from "../../toneRetriever";
+import ToneAPI from "../../toneApi";
 
 export type UserDetails = {
     id: string,
@@ -21,7 +21,7 @@ export const errors = {
 };
 
 export default class UserController extends Route {
-    constructor(private databaseClient: IDatabaseClient, private toneRetriever: ToneRetriever) {
+    constructor(private databaseClient: IDatabaseClient, private toneApi: ToneAPI) {
         super("/");
     }
 
@@ -44,7 +44,7 @@ export default class UserController extends Route {
         }
 
         try {
-            const tone = await this.toneRetriever.getTone();
+            const tone = await this.toneApi.getTone();
 
             const dbRecord = await this.databaseClient.getUserInfo(userId);
             if (!dbRecord) {
