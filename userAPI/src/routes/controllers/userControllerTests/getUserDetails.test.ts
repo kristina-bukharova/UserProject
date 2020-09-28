@@ -18,7 +18,7 @@ describe("Get User Details", () => {
         mockPostgresClient = new PostgresDatabaseClient(mockPostgresDatabaseConfig);
         toneApi = new ToneAPI("http://some-url.com");
         userController = new UserController(mockPostgresClient, toneApi);
-        (toneApi.getTone as jest.Mock).mockResolvedValue("humorous");
+        (toneApi.getTone as jest.Mock).mockResolvedValue("Humorous");
     });
 
     beforeEach(() => {
@@ -34,7 +34,7 @@ describe("Get User Details", () => {
             firstName: mockUserData.first_name,
             lastName: mockUserData.last_name,
             biographyTitle: mockUserData.biography_title,
-            biographyTone: "humorous",
+            biographyTone: "Humorous",
         };
 
         const req: any = mockGetRequestWithParams({ id: "8e4958aa-8530-4014-bdf2-8edb7bba519a" });
